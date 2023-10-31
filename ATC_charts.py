@@ -1,14 +1,11 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from datetime import datetime as dt
-from wordcloud import WordCloud
 
 
 df = pd.read_csv("netflix_titles.csv")
 
 #print(df.head())
-
 
 # Pie
 ## Group and count
@@ -46,55 +43,12 @@ def hist_chart(df):
 
     return fig2
 
-# # Heatmap
-#
-# ## Extract the required columns for release dates
-# df['date_added'] = pd.to_datetime(df['date_added'])
-#
-# # Filtering out rows with missing or incorrect dates
-# df = df.dropna(subset=['date_added'])
-# df_cleaned = df.dropna()
-#
-# ## Extract year and month from the 'date_added' column
-# df['release_year'] = df['date_added'].dt.year
-# df['release_month'] = df['date_added'].dt.strftime('%B')
-#
-# ## Group data by year and month to get counts
-# grouped = df.groupby(['release_year', 'release_month']).size().reset_index(name='count')
-#
-# ## Order the months by their chronological order
-# months_order = ['December', 'November', 'October', 'September', 'August', 'July', 'June', 'May', 'April', 'March', 'February', 'January']
-# grouped['release_month'] = pd.Categorical(grouped['release_month'], categories=months_order, ordered=True)
-#
-# # Check for missing combinations and fill zero counts for all month and year combinations
-# all_combinations = pd.MultiIndex.from_product([grouped['release_year'].unique(),
-#                                                months_order], names=['release_year', 'release_month'])
-#
-# all_data = pd.DataFrame(index=all_combinations).reset_index()
-#
-# merged = all_data.merge(grouped, on=['release_year', 'release_month'], how='left')
-#
-# merged['count'].fillna(0, inplace=True)
-#
-# # Create the heatmap using the merged data
-#
-# def heat_map(merged):
-#     fig3 = px.imshow(merged.pivot(index='release_month', columns='release_year', values='count'),
-#                 x=merged['release_year'].unique(),
-#                 y=months_order,
-#                 labels=dict(x="Release Year", y="Release Month", color="Count of Releases"))
-#     fig3.update_layout(
-#     title="Netflix Releases by Month and Year",
-#     plot_bgcolor='white',
-#     xaxis=dict(showline=True, linewidth=2, linecolor='black'),
-#     yaxis=dict(showline=True, linewidth=2, linecolor='black'))
-#     return fig3
-
 # line chart
 grouped2 = df.groupby(['release_year', 'type']).size().reset_index(name='count')
 #print(grouped2)
 
 def line_chart(grouped2):
+
     fig4 = px.line(grouped2,x="release_year", y="count", title="Number of movies/shows released over the years",
                color='type')
     ## Update the layout
@@ -107,6 +61,4 @@ def line_chart(grouped2):
     ## Remove the gray background (setting it to white)
     fig4.update_layout(plot_bgcolor='white')
     return fig4
-
-
 

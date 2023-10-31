@@ -2,7 +2,6 @@ import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from ATC_charts import df, pie_chart, hist_chart, grouped2, line_chart
-#from cards import card_content1, card_content2, card_content3
 from ATC_navbar import navbar
 
 app = dash.Dash(external_stylesheets=[dbc.themes.JOURNAL])
@@ -13,15 +12,14 @@ app.layout = dbc.Container([
         [dbc.Col(
             [html.H1(id="H1", children="ATC Club Netflix Dashboard")],
             xl=12, lg=12, md=12, sm=12, xs=12)], style={"textAlign": "center", "marginTop": 30, "marginBottom": 30}),
-    # dbc.Row([
-    #     dbc.Col(dbc.Card(card_content1, color="primary", inverse=True)),  # inverse ensures text & card colour inverted
-    #     dbc.Col(dbc.Card(card_content2, color="primary", inverse=True)),
-    #     dbc.Col(dbc.Card(card_content3, color="primary", inverse=True))
-    #     ]),
+    html.Br(), #adding break
+    html.Br(), #adding break
     dbc.Row([
         dbc.Col([dcc.Graph(id="", figure=pie_chart(df))]),
         dbc.Col([dcc.Graph(id="", figure=hist_chart(df))])
         ]),
+    html.Br(), #adding break
+    html.Br(), #adding break
     dbc.Row([
         dbc.Col([dcc.Graph(id="", figure=line_chart(grouped2))]),
     ]),
